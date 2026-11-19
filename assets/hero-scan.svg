@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b14"/>
+      <stop offset="100%" stop-color="#0a1222"/>
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0077ff" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+      .sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Outer Window -->
+  <rect x="1" y="1" width="878" height="438" rx="10" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Window Header -->
+  <circle cx="24" cy="22" r="5" fill="#ff5f56"/>
+  <circle cx="42" cy="22" r="5" fill="#ffbd2e"/>
+  <circle cx="60" cy="22" r="5" fill="#27c93f"/>
+
+  <text x="85" y="26" class="mono" font-size="12" fill="#64748b">zine007mhidra@github ~ $ <tspan fill="#38bdf8">./profile-scan --live</tspan></text>
+
+  <!-- Live Pulse -->
+  <circle cx="820" cy="22" r="4" fill="#00e5ff" filter="url(#glow)"/>
+  <text x="832" y="26" class="mono" font-size="11" font-weight="bold" fill="#00e5ff" letter-spacing="1">LIVE</text>
+
+  <line x1="1" y1="42" x2="879" y2="42" stroke="#172338" stroke-width="1"/>
+
+  <!-- Left Card: VISUAL.MAP -->
+  <rect x="20" y="58" width="320" height="362" rx="8" fill="#050811" stroke="#0e233d" stroke-width="1.2"/>
+  <text x="36" y="86" class="mono" font-size="11" font-weight="700" fill="#00e5ff" letter-spacing="1.5">VISUAL.MAP</text>
+  <line x1="36" y1="94" x2="324" y2="94" stroke="#0e233d" stroke-width="1"/>
+
+  <!-- Subtle Grid Pattern in Left Card -->
+  <g stroke="#08182b" stroke-width="0.75" opacity="0.6">
+    <line x1="20" y1="140" x2="340" y2="140"/>
+    <line x1="20" y1="190" x2="340" y2="190"/>
+    <line x1="20" y1="240" x2="340" y2="240"/>
+    <line x1="20" y1="290" x2="340" y2="290"/>
+    <line x1="20" y1="340" x2="340" y2="340"/>
+    <line x1="75" y1="58" x2="75" y2="420"/>
+    <line x1="130" y1="58" x2="130" y2="420"/>
+    <line x1="185" y1="58" x2="185" y2="420"/>
+    <line x1="240" y1="58" x2="240" y2="420"/>
+    <line x1="295" y1="58" x2="295" y2="420"/>
+  </g>
+
+  <!-- Identicon ASCII Block -->
+  <g class="mono" font-size="11" fill="#00e5ff" font-weight="bold" letter-spacing="1" opacity="0.95" filter="url(#glow)">
+    <text x="45" y="135">  @@@@@@@@        @@@@@@@@  </text>
+    <text x="45" y="149">  @@@@@@@@        @@@@@@@@  </text>
+    <text x="45" y="163">  @@@@@@@@        @@@@@@@@  </text>
+    <text x="45" y="177">  @@@@@@@@        @@@@@@@@  </text>
+    <text x="45" y="191">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="205">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="219">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="233">      @@@@@@    @@@@@@      </text>
+    <text x="45" y="247">      @@@@@@    @@@@@@      </text>
+    <text x="45" y="261">      @@@@@@    @@@@@@      </text>
+    <text x="45" y="275">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="289">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="303">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="317">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="331">  @@@@@@@@@@@@@@@@@@@@@@@@  </text>
+    <text x="45" y="345">      @@@@@@@@@@@@@@@@      </text>
+    <text x="45" y="359">      @@@@@@@@@@@@@@@@      </text>
+    <text x="45" y="373">      @@@@@@@@@@@@@@@@      </text>
+    <text x="45" y="387">      @@@@@@@@@@@@@@@@      </text>
+  </g>
+
+  <!-- Right Card: SYSTEM.INFO -->
+  <rect x="355" y="58" width="505" height="362" rx="8" fill="#050811" stroke="#0e233d" stroke-width="1.2"/>
+  <text x="375" y="86" class="mono" font-size="11" font-weight="700" fill="#00e5ff" letter-spacing="1.5">SYSTEM.INFO</text>
+  <line x1="375" y1="94" x2="840" y2="94" stroke="#0e233d" stroke-width="1"/>
+
+  <!-- Specs Grid -->
+  <g class="mono" font-size="12">
+    <!-- Row 1 -->
+    <text x="375" y="125" fill="#38bdf8">Subject</text>
+    <text x="510" y="125" fill="#f8fafc" font-weight="600">Zine El Abidine MHIDRA</text>
+
+    <!-- Row 2 -->
+    <text x="375" y="153" fill="#38bdf8">Handle</text>
+    <text x="510" y="153" fill="#00e5ff">@Zine007MHIDRA</text>
+
+    <!-- Row 3 -->
+    <text x="375" y="181" fill="#38bdf8">Role</text>
+    <text x="510" y="181" fill="#e2e8f0">AI &amp; Full-Stack Developer</text>
+
+    <!-- Row 4 -->
+    <text x="375" y="209" fill="#38bdf8">Status</text>
+    <text x="510" y="209" fill="#22d3ee">Building | Learning | Shipping</text>
+
+    <!-- Row 5 -->
+    <text x="375" y="237" fill="#38bdf8">Languages</text>
+    <text x="510" y="237" fill="#cbd5e1">TypeScript, Python, HTML, CSS</text>
+
+    <!-- Row 6 -->
+    <text x="375" y="265" fill="#38bdf8">Repositories</text>
+    <text x="510" y="265" fill="#f8fafc">12 public</text>
+
+    <!-- Row 7 -->
+    <text x="375" y="293" fill="#38bdf8">Contributions</text>
+    <text x="510" y="293" fill="#f8fafc">158 in the last year</text>
+
+    <!-- Row 8 -->
+    <text x="375" y="321" fill="#38bdf8">Stars</text>
+    <text x="510" y="321" fill="#f8fafc">3</text>
+
+    <!-- Row 9 -->
+    <text x="375" y="349" fill="#38bdf8">Active Days</text>
+    <text x="510" y="349" fill="#f8fafc">32</text>
+
+    <!-- Row 10 -->
+    <text x="375" y="377" fill="#38bdf8">Contact</text>
+    <text x="510" y="377" fill="#00e5ff">github.com/Zine007MHIDRA</text>
+  </g>
+
+  <!-- Watermark border corner accent -->
+  <path d="M 850 410 L 850 418 L 842 418" stroke="#00e5ff" stroke-width="1.5" fill="none"/>
+  <path d="M 30 410 L 30 418 L 38 418" stroke="#00e5ff" stroke-width="1.5" fill="none"/>
+</svg>

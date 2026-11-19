@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 270" width="100%" height="100%">
+  <defs>
+    <linearGradient id="neoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070b14"/>
+      <stop offset="100%" stop-color="#0a1222"/>
+    </linearGradient>
+    <style>
+      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+    </style>
+  </defs>
+
+  <!-- Container -->
+  <rect x="1" y="1" width="878" height="268" rx="10" fill="url(#neoBg)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Window Header -->
+  <circle cx="24" cy="22" r="5" fill="#ff5f56"/>
+  <circle cx="42" cy="22" r="5" fill="#ffbd2e"/>
+  <circle cx="60" cy="22" r="5" fill="#27c93f"/>
+  <text x="85" y="26" class="mono" font-size="12" fill="#64748b">zine007mhidra@github ~ $ <tspan fill="#38bdf8">neofetch</tspan></text>
+  <line x1="1" y1="42" x2="879" y2="42" stroke="#172338" stroke-width="1"/>
+
+  <!-- Left: Cyberpunk ASCII GitHub Badge -->
+  <g transform="translate(50, 75)" class="mono" font-size="14" fill="#00e5ff" font-weight="bold" opacity="0.95">
+    <text x="0" y="20">  ┌──────────────┐</text>
+    <text x="0" y="42">  │  ■■      ■■  │</text>
+    <text x="0" y="64">  │  ·  github   │</text>
+    <text x="0" y="86">  │  &gt; _         │</text>
+    <text x="0" y="108">  └──────────────┘</text>
+  </g>
+
+  <!-- Right: Neofetch Info Rows -->
+  <g transform="translate(290, 75)" class="mono">
+    <!-- Header -->
+    <text x="0" y="20" font-size="14" font-weight="bold" fill="#00e5ff">zine007mhidra <tspan fill="#64748b" font-weight="normal">@github</tspan></text>
+    <line x1="0" y1="30" x2="520" y2="30" stroke="#172e48" stroke-width="1"/>
+
+    <!-- Spec rows -->
+    <text x="0" y="55" font-size="12" fill="#38bdf8">Name</text>
+    <text x="120" y="55" font-size="12" fill="#f8fafc">Zine El Abidine MHIDRA</text>
+
+    <text x="0" y="78" font-size="12" fill="#38bdf8">Role</text>
+    <text x="120" y="78" font-size="12" fill="#e2e8f0">AI &amp; Full-Stack Developer</text>
+
+    <text x="0" y="101" font-size="12" fill="#38bdf8">Stars</text>
+    <text x="120" y="101" font-size="12" fill="#f8fafc">3</text>
+
+    <text x="0" y="124" font-size="12" fill="#38bdf8">Repos</text>
+    <text x="120" y="124" font-size="12" fill="#f8fafc">12</text>
+
+    <text x="0" y="147" font-size="12" fill="#38bdf8">Top Lang</text>
+    <text x="120" y="147" font-size="12" fill="#38bdf8">TypeScript</text>
+
+    <text x="0" y="170" font-size="12" fill="#38bdf8">Activity</text>
+    <text x="120" y="170" font-size="12" fill="#00e5ff" font-weight="bold">158 contributions</text>
+
+    <!-- Color Palette Swatches -->
+    <g transform="translate(0, 185)">
+      <rect x="0" y="0" width="22" height="12" rx="2" fill="#00e5ff"/>
+      <rect x="26" y="0" width="22" height="12" rx="2" fill="#38bdf8"/>
+      <rect x="52" y="0" width="22" height="12" rx="2" fill="#6366f1"/>
+      <rect x="78" y="0" width="22" height="12" rx="2" fill="#a855f7"/>
+      <rect x="104" y="0" width="22" height="12" rx="2" fill="#ec4899"/>
+      <rect x="130" y="0" width="22" height="12" rx="2" fill="#22c55e"/>
+    </g>
+  </g>
+</svg>
