@@ -100,29 +100,23 @@
 
 *If the work is useful, open an issue, improve the documentation, share a project, or start a conversation.*
 
-<!-- CONNECT TERMINAL & ACTION BUTTONS -->
+<!-- CONNECT SPOTLIGHT CARD (1:1 VIDEO MATCH) -->
 <div align="center">
-  <img src="./assets/connect.svg" width="100%" alt="Connect: GitHub, Portfolio, LinkedIn, Email" />
-  <br /><br />
   <a href="https://github.com/Zine007MHIDRA">
-    <img src="https://img.shields.io/badge/GitHub-@Zine007MHIDRA-07172e?style=for-the-badge&logo=github&logoColor=00e5ff&labelColor=050811" alt="GitHub" />
-  </a>
-  &nbsp;
-  <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">
-    <img src="https://img.shields.io/badge/Portfolio-Selected%20Work-07172e?style=for-the-badge&logo=vercel&logoColor=38bdf8&labelColor=050811" alt="Portfolio" />
-  </a>
-  &nbsp;
-  <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/">
-    <img src="https://img.shields.io/badge/LinkedIn-Connect-07172e?style=for-the-badge&logo=linkedin&logoColor=0ea5e9&labelColor=050811" alt="LinkedIn" />
-  </a>
-  &nbsp;
-  <a href="mailto:zine.mhidra@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Get%20in%20Touch-07172e?style=for-the-badge&logo=gmail&logoColor=22d3ee&labelColor=050811" alt="Email" />
+    <img src="./assets/connect.svg" width="100%" alt="GitHub: @Zine007MHIDRA" />
   </a>
 </div>
 
 <br />
 
 <div align="center">
-  <sub>Zine El Abidine MHIDRA &bull; <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">portfolio</a> &bull; <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/">LinkedIn</a> &bull; <a href="mailto:zine.mhidra@gmail.com">zine.mhidra@gmail.com</a></sub>
+  <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work"><strong>Selected Work ↗</strong></a> &nbsp;&bull;&nbsp;
+  <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/"><strong>LinkedIn Profile ↗</strong></a> &nbsp;&bull;&nbsp;
+  <a href="mailto:zine.mhidra@gmail.com"><strong>zine.mhidra@gmail.com</strong></a>
+</div>
+
+<br />
+
+<div align="center">
+  <sub>Zine El Abidine MHIDRA &bull; AI &amp; Full-Stack Developer</sub>
 </div>
