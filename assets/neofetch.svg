@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 270" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 255" width="100%" height="100%">
   <defs>
     <linearGradient id="neoBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-
     <style>
       text {
         text-rendering: geometricPrecision;
@@ -17,15 +16,11 @@
       .sans {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
       }
-      .pcard { rx: 8px; fill: url(#cardGrad); stroke: #0f2b48; stroke-width: 1.2; }
-      .ptag { rx: 11px; fill: #07172b; stroke: #123861; stroke-width: 1; }
-      .ptag-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif; font-size: 10.5px; font-weight: 500; fill: #38bdf8; text-anchor: middle; }
     </style>
-
   </defs>
 
   <!-- Container -->
-  <rect x="1" y="1" width="878" height="268" rx="10" fill="url(#neoBg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="1" y="1" width="878" height="253" rx="10" fill="url(#neoBg)" stroke="#1e293b" stroke-width="1.5"/>
 
   <!-- Window Header -->
   <circle cx="24" cy="22" r="5" fill="#ff5f56"/>
@@ -35,7 +30,7 @@
   <line x1="1" y1="42" x2="879" y2="42" stroke="#172338" stroke-width="1"/>
 
   <!-- Left: Cyberpunk ASCII GitHub Badge -->
-  <g transform="translate(50, 75)" class="mono" font-size="14" fill="#00e5ff" font-weight="bold" opacity="0.95">
+  <g transform="translate(55, 75)" class="mono" font-size="14" fill="#00e5ff" font-weight="bold" opacity="0.95">
     <text x="0" y="20">  ┌──────────────┐</text>
     <text x="0" y="42">  │  ■■      ■■  │</text>
     <text x="0" y="64">  │  ·  github   │</text>
@@ -43,7 +38,7 @@
     <text x="0" y="108">  └──────────────┘</text>
   </g>
 
-  <!-- Right: Neofetch Info Rows -->
+  <!-- Right: Neofetch Info Rows (Clean Termination) -->
   <g transform="translate(290, 75)">
     <text x="0" y="20" class="mono" font-size="14" font-weight="bold" fill="#00e5ff">zine007mhidra <tspan fill="#64748b" font-weight="normal">@github</tspan></text>
     <line x1="0" y1="30" x2="520" y2="30" stroke="#172e48" stroke-width="1"/>
@@ -65,14 +60,9 @@
 
     <text x="0" y="170" class="mono" font-size="12" fill="#38bdf8">Activity</text>
     <text x="120" y="170" class="mono" font-size="12" fill="#00e5ff" font-weight="bold">158 contributions</text>
-
-    <g transform="translate(0, 185)">
-      <rect x="0" y="0" width="22" height="12" rx="2" fill="#00e5ff"/>
-      <rect x="26" y="0" width="22" height="12" rx="2" fill="#38bdf8"/>
-      <rect x="52" y="0" width="22" height="12" rx="2" fill="#6366f1"/>
-      <rect x="78" y="0" width="22" height="12" rx="2" fill="#a855f7"/>
-      <rect x="104" y="0" width="22" height="12" rx="2" fill="#ec4899"/>
-      <rect x="130" y="0" width="22" height="12" rx="2" fill="#22c55e"/>
-    </g>
   </g>
+
+  <!-- Corner Tech Accents -->
+  <path d="M 865 240 L 865 247 L 857 247" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M 15 240 L 15 247 L 23 247" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.6"/>
 </svg>
