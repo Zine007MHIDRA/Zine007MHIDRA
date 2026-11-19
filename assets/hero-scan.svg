@@ -11,9 +11,24 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+
     <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+      text {
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .mono {
+        font-family: "Cascadia Code", "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      }
+      .sans {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .pcard { rx: 8px; fill: url(#cardGrad); stroke: #0f2b48; stroke-width: 1.2; }
+      .ptag { rx: 11px; fill: #07172b; stroke: #123861; stroke-width: 1; }
+      .ptag-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif; font-size: 10.5px; font-weight: 500; fill: #38bdf8; text-anchor: middle; }
     </style>
+
   </defs>
 
   <!-- Outer Window -->
@@ -38,11 +53,10 @@
   <line x1="36" y1="94" x2="324" y2="94" stroke="#0e233d" stroke-width="1"/>
 
   <!-- Diagnostic Scan Header -->
-  <text x="36" y="116" class="mono" font-size="10" fill="#38bdf8" opacity="0.85">SCAN: IDENTITY_MATRIX [ZM-007]</text>
-  <text x="36" y="131" class="mono" font-size="9" fill="#64748b">STATUS: ACTIVE // 21x15 LED_GRID</text>
+  <text x="36" y="116" class="mono" font-size="9.5" fill="#38bdf8" opacity="0.9" letter-spacing="0.5">SCAN: IDENTITY_MATRIX [ZM-007]</text>
+  <text x="36" y="131" class="mono" font-size="9" fill="#64748b" letter-spacing="0.5">STATUS: ACTIVE // 21x15 LED_GRID</text>
 
   <!-- Vector Pixel Matrix Monogram (ZM) -->
-  <g id="pixel-monogram">
     <rect x="39.0" y="150.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
     <rect x="52.5" y="150.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
     <rect x="66.0" y="150.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
@@ -242,7 +256,6 @@
     <rect x="282.0" y="339.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
     <rect x="295.5" y="339.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
     <rect x="309.0" y="339.0" width="11" height="11" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>
-    <!-- Lit Cells -->
     <g filter="url(#glow)">
       <rect x="52.5" y="163.5" width="11" height="11" rx="2" fill="#00e5ff" stroke="#38bdf8" stroke-width="0.8"/>
       <rect x="66.0" y="163.5" width="11" height="11" rx="2" fill="#00e5ff" stroke="#38bdf8" stroke-width="0.8"/>
@@ -361,10 +374,9 @@
       <rect x="282.0" y="325.5" width="11" height="11" rx="2" fill="#00e5ff" stroke="#38bdf8" stroke-width="0.8"/>
       <rect x="295.5" y="325.5" width="11" height="11" rx="2" fill="#00e5ff" stroke="#38bdf8" stroke-width="0.8"/>
     </g>
-  </g>
 
-  <!-- Sub-label -->
-  <text x="180" y="380" class="mono" font-size="10.5" fill="#38bdf8" letter-spacing="2" text-anchor="middle" font-weight="600">ID: ZINE EL ABIDINE MHIDRA</text>
+  <!-- Sub-label in refined Sans -->
+  <text x="180" y="380" class="sans" font-size="11" fill="#38bdf8" letter-spacing="1.5" text-anchor="middle" font-weight="600">ID: ZINE EL ABIDINE MHIDRA</text>
 
   <!-- Corner Brackets on VISUAL.MAP -->
   <path d="M 32 400 L 32 410 L 42 410" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
@@ -377,47 +389,47 @@
   <text x="375" y="86" class="mono" font-size="11" font-weight="700" fill="#00e5ff" letter-spacing="1.5">SYSTEM.INFO</text>
   <line x1="375" y1="94" x2="840" y2="94" stroke="#0e233d" stroke-width="1"/>
 
-  <!-- Specs Grid -->
-  <g class="mono" font-size="12">
+  <!-- Specs Grid: Monospace Labels + Modern Geometric Sans Values -->
+  <g>
     <!-- Row 1 -->
-    <text x="375" y="125" fill="#38bdf8">Subject</text>
-    <text x="510" y="125" fill="#f8fafc" font-weight="600">Zine El Abidine MHIDRA</text>
+    <text x="375" y="125" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Subject</text>
+    <text x="500" y="125" class="sans" font-size="13" fill="#f8fafc" font-weight="600">Zine El Abidine MHIDRA</text>
 
     <!-- Row 2 -->
-    <text x="375" y="153" fill="#38bdf8">Handle</text>
-    <text x="510" y="153" fill="#00e5ff">@Zine007MHIDRA</text>
+    <text x="375" y="153" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Handle</text>
+    <text x="500" y="153" class="mono" font-size="12" fill="#00e5ff">@Zine007MHIDRA</text>
 
     <!-- Row 3 -->
-    <text x="375" y="181" fill="#38bdf8">Role</text>
-    <text x="510" y="181" fill="#e2e8f0">AI &amp; Full-Stack Developer</text>
+    <text x="375" y="181" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Role</text>
+    <text x="500" y="181" class="sans" font-size="13" fill="#e2e8f0" font-weight="500">AI &amp; Full-Stack Developer</text>
 
     <!-- Row 4 -->
-    <text x="375" y="209" fill="#38bdf8">Status</text>
-    <text x="510" y="209" fill="#22d3ee">Building | Learning | Shipping</text>
+    <text x="375" y="209" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Status</text>
+    <text x="500" y="209" class="sans" font-size="12.5" fill="#22d3ee" font-weight="500">Building | Learning | Shipping</text>
 
     <!-- Row 5 -->
-    <text x="375" y="237" fill="#38bdf8">Languages</text>
-    <text x="510" y="237" fill="#cbd5e1">TypeScript, Python, HTML, CSS</text>
+    <text x="375" y="237" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Languages</text>
+    <text x="500" y="237" class="sans" font-size="12.5" fill="#cbd5e1">TypeScript, Python, HTML, CSS</text>
 
     <!-- Row 6 -->
-    <text x="375" y="265" fill="#38bdf8">Repositories</text>
-    <text x="510" y="265" fill="#f8fafc">12 public</text>
+    <text x="375" y="265" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Repositories</text>
+    <text x="500" y="265" class="sans" font-size="12.5" fill="#f8fafc">12 public</text>
 
     <!-- Row 7 -->
-    <text x="375" y="293" fill="#38bdf8">Contributions</text>
-    <text x="510" y="293" fill="#f8fafc">158 in the last year</text>
+    <text x="375" y="293" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Contributions</text>
+    <text x="500" y="293" class="sans" font-size="12.5" fill="#f8fafc">158 in the last year</text>
 
     <!-- Row 8 -->
-    <text x="375" y="321" fill="#38bdf8">Stars</text>
-    <text x="510" y="321" fill="#f8fafc">3</text>
+    <text x="375" y="321" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Stars</text>
+    <text x="500" y="321" class="sans" font-size="12.5" fill="#f8fafc">3</text>
 
     <!-- Row 9 -->
-    <text x="375" y="349" fill="#38bdf8">Active Days</text>
-    <text x="510" y="349" fill="#f8fafc">32</text>
+    <text x="375" y="349" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Active Days</text>
+    <text x="500" y="349" class="sans" font-size="12.5" fill="#f8fafc">32</text>
 
     <!-- Row 10 -->
-    <text x="375" y="377" fill="#38bdf8">Contact</text>
-    <text x="510" y="377" fill="#00e5ff">github.com/Zine007MHIDRA</text>
+    <text x="375" y="377" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Contact</text>
+    <text x="500" y="377" class="mono" font-size="12" fill="#00e5ff">github.com/Zine007MHIDRA</text>
   </g>
 
   <!-- Watermark border corner accent -->

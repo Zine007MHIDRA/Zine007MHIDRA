@@ -1,66 +1,61 @@
+import os
+import xml.etree.ElementTree as ET
+
+# Shared CSS styles
+SHARED_STYLE = '''
+    <style>
+      text {
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .mono {
+        font-family: "Cascadia Code", "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      }
+      .sans {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .pcard { rx: 8px; fill: url(#cardGrad); stroke: #0f2b48; stroke-width: 1.2; }
+      .ptag { rx: 11px; fill: #07172b; stroke: #123861; stroke-width: 1; }
+      .ptag-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif; font-size: 10.5px; font-weight: 500; fill: #38bdf8; text-anchor: middle; }
+    </style>
+'''
+
+# 1. HERO SCAN
 COLS = 21
 ROWS = 15
-
 grid = [[0 for _ in range(COLS)] for _ in range(ROWS)]
-
-# Z: cols 1..9
 for r in [1, 2]:
     for c in range(1, 10):
         grid[r][c] = 1
-
-diag = [
-    (3, 7), (3, 8),
-    (4, 6), (4, 7),
-    (5, 5), (5, 6),
-    (6, 5), (6, 6),
-    (7, 4), (7, 5),
-    (8, 3), (8, 4),
-    (9, 3), (9, 4),
-    (10, 2), (10, 3),
-    (11, 1), (11, 2)
-]
+diag = [(3, 7), (3, 8), (4, 6), (4, 7), (5, 5), (5, 6), (6, 5), (6, 6), (7, 4), (7, 5), (8, 3), (8, 4), (9, 3), (9, 4), (10, 2), (10, 3), (11, 1), (11, 2)]
 for r, c in diag:
     grid[r][c] = 1
-
 for r in [12, 13]:
     for c in range(1, 10):
         grid[r][c] = 1
-
-# M: cols 11..19
 for r in range(1, 14):
     grid[r][11] = 1
     grid[r][12] = 1
     grid[r][18] = 1
     grid[r][19] = 1
-
-m_diag = [
-    (2, 13), (2, 17),
-    (3, 13), (3, 17),
-    (4, 14), (4, 16),
-    (5, 14), (5, 16),
-    (6, 15), (7, 15)
-]
+m_diag = [(2, 13), (2, 17), (3, 13), (3, 17), (4, 14), (4, 16), (5, 14), (5, 16), (6, 15), (7, 15)]
 for r, c in m_diag:
     grid[r][c] = 1
 
-def generate_pixel_matrix_svg():
+def generate_pixel_matrix():
     cell_size = 11
     gap = 2.5
     pitch = cell_size + gap
     start_x = 39
     start_y = 150
-
     elements = []
-    # First render all unlit cells
     for r in range(ROWS):
         for c in range(COLS):
             x = start_x + c * pitch
             y = start_y + r * pitch
             if grid[r][c] == 0:
                 elements.append(f'    <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>')
-
-    # Then render lit cells on top with glow
-    elements.append('    <!-- Lit Cells -->')
     elements.append('    <g filter="url(#glow)">')
     for r in range(ROWS):
         for c in range(COLS):
@@ -71,32 +66,9 @@ def generate_pixel_matrix_svg():
     elements.append('    </g>')
     return '\n'.join(elements)
 
-
-import os
-
-ZM_LINES = [
-    "@@@@@@@@@@@@@@@@   @@@@          @@@@",
-    "@@@@@@@@@@@@@@@@   @@@@@        @@@@@",
-    "            @@@@   @@@@@@      @@@@@@",
-    "           @@@@    @@@@@@@    @@@@@@@",
-    "          @@@@     @@@@ @@@  @@@ @@@@",
-    "         @@@@      @@@@  @@@@@@  @@@@",
-    "        @@@@       @@@@   @@@@   @@@@",
-    "       @@@@        @@@@    @@    @@@@",
-    "      @@@@         @@@@          @@@@",
-    "     @@@@          @@@@          @@@@",
-    "    @@@@           @@@@          @@@@",
-    "   @@@@            @@@@          @@@@",
-    "  @@@@             @@@@          @@@@",
-    " @@@@              @@@@          @@@@",
-    "@@@@@@@@@@@@@@@@   @@@@          @@@@",
-    "@@@@@@@@@@@@@@@@   @@@@          @@@@"
-]
-
 def make_hero_scan():
-    pixel_matrix = generate_pixel_matrix_svg()
-    
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="100%">
+    matrix = generate_pixel_matrix()
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="100%">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
@@ -109,9 +81,7 @@ def make_hero_scan():
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <style>
-      .mono {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }}
-    </style>
+{SHARED_STYLE}
   </defs>
 
   <!-- Outer Window -->
@@ -136,16 +106,14 @@ def make_hero_scan():
   <line x1="36" y1="94" x2="324" y2="94" stroke="#0e233d" stroke-width="1"/>
 
   <!-- Diagnostic Scan Header -->
-  <text x="36" y="116" class="mono" font-size="10" fill="#38bdf8" opacity="0.85">SCAN: IDENTITY_MATRIX [ZM-007]</text>
-  <text x="36" y="131" class="mono" font-size="9" fill="#64748b">STATUS: ACTIVE // 21x15 LED_GRID</text>
+  <text x="36" y="116" class="mono" font-size="9.5" fill="#38bdf8" opacity="0.9" letter-spacing="0.5">SCAN: IDENTITY_MATRIX [ZM-007]</text>
+  <text x="36" y="131" class="mono" font-size="9" fill="#64748b" letter-spacing="0.5">STATUS: ACTIVE // 21x15 LED_GRID</text>
 
   <!-- Vector Pixel Matrix Monogram (ZM) -->
-  <g id="pixel-monogram">
-{pixel_matrix}
-  </g>
+{matrix}
 
-  <!-- Sub-label -->
-  <text x="180" y="380" class="mono" font-size="10.5" fill="#38bdf8" letter-spacing="2" text-anchor="middle" font-weight="600">ID: ZINE EL ABIDINE MHIDRA</text>
+  <!-- Sub-label in refined Sans -->
+  <text x="180" y="380" class="sans" font-size="11" fill="#38bdf8" letter-spacing="1.5" text-anchor="middle" font-weight="600">ID: ZINE EL ABIDINE MHIDRA</text>
 
   <!-- Corner Brackets on VISUAL.MAP -->
   <path d="M 32 400 L 32 410 L 42 410" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
@@ -158,74 +126,63 @@ def make_hero_scan():
   <text x="375" y="86" class="mono" font-size="11" font-weight="700" fill="#00e5ff" letter-spacing="1.5">SYSTEM.INFO</text>
   <line x1="375" y1="94" x2="840" y2="94" stroke="#0e233d" stroke-width="1"/>
 
-  <!-- Specs Grid -->
-  <g class="mono" font-size="12">
+  <!-- Specs Grid: Monospace Labels + Modern Geometric Sans Values -->
+  <g>
     <!-- Row 1 -->
-    <text x="375" y="125" fill="#38bdf8">Subject</text>
-    <text x="510" y="125" fill="#f8fafc" font-weight="600">Zine El Abidine MHIDRA</text>
+    <text x="375" y="125" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Subject</text>
+    <text x="500" y="125" class="sans" font-size="13" fill="#f8fafc" font-weight="600">Zine El Abidine MHIDRA</text>
 
     <!-- Row 2 -->
-    <text x="375" y="153" fill="#38bdf8">Handle</text>
-    <text x="510" y="153" fill="#00e5ff">@Zine007MHIDRA</text>
+    <text x="375" y="153" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Handle</text>
+    <text x="500" y="153" class="mono" font-size="12" fill="#00e5ff">@Zine007MHIDRA</text>
 
     <!-- Row 3 -->
-    <text x="375" y="181" fill="#38bdf8">Role</text>
-    <text x="510" y="181" fill="#e2e8f0">AI &amp; Full-Stack Developer</text>
+    <text x="375" y="181" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Role</text>
+    <text x="500" y="181" class="sans" font-size="13" fill="#e2e8f0" font-weight="500">AI &amp; Full-Stack Developer</text>
 
     <!-- Row 4 -->
-    <text x="375" y="209" fill="#38bdf8">Status</text>
-    <text x="510" y="209" fill="#22d3ee">Building | Learning | Shipping</text>
+    <text x="375" y="209" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Status</text>
+    <text x="500" y="209" class="sans" font-size="12.5" fill="#22d3ee" font-weight="500">Building | Learning | Shipping</text>
 
     <!-- Row 5 -->
-    <text x="375" y="237" fill="#38bdf8">Languages</text>
-    <text x="510" y="237" fill="#cbd5e1">TypeScript, Python, HTML, CSS</text>
+    <text x="375" y="237" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Languages</text>
+    <text x="500" y="237" class="sans" font-size="12.5" fill="#cbd5e1">TypeScript, Python, HTML, CSS</text>
 
     <!-- Row 6 -->
-    <text x="375" y="265" fill="#38bdf8">Repositories</text>
-    <text x="510" y="265" fill="#f8fafc">12 public</text>
+    <text x="375" y="265" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Repositories</text>
+    <text x="500" y="265" class="sans" font-size="12.5" fill="#f8fafc">12 public</text>
 
     <!-- Row 7 -->
-    <text x="375" y="293" fill="#38bdf8">Contributions</text>
-    <text x="510" y="293" fill="#f8fafc">158 in the last year</text>
+    <text x="375" y="293" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Contributions</text>
+    <text x="500" y="293" class="sans" font-size="12.5" fill="#f8fafc">158 in the last year</text>
 
     <!-- Row 8 -->
-    <text x="375" y="321" fill="#38bdf8">Stars</text>
-    <text x="510" y="321" fill="#f8fafc">3</text>
+    <text x="375" y="321" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Stars</text>
+    <text x="500" y="321" class="sans" font-size="12.5" fill="#f8fafc">3</text>
 
     <!-- Row 9 -->
-    <text x="375" y="349" fill="#38bdf8">Active Days</text>
-    <text x="510" y="349" fill="#f8fafc">32</text>
+    <text x="375" y="349" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Active Days</text>
+    <text x="500" y="349" class="sans" font-size="12.5" fill="#f8fafc">32</text>
 
     <!-- Row 10 -->
-    <text x="375" y="377" fill="#38bdf8">Contact</text>
-    <text x="510" y="377" fill="#00e5ff">github.com/Zine007MHIDRA</text>
+    <text x="375" y="377" class="mono" font-size="11.5" fill="#38bdf8" letter-spacing="0.5">Contact</text>
+    <text x="500" y="377" class="mono" font-size="12" fill="#00e5ff">github.com/Zine007MHIDRA</text>
   </g>
 
   <!-- Watermark border corner accent -->
   <path d="M 850 410 L 850 418 L 842 418" stroke="#00e5ff" stroke-width="1.5" fill="none"/>
 </svg>
 '''
-    return svg
 
-with open('assets/hero-scan.svg', 'w', encoding='utf-8') as f:
-    f.write(make_hero_scan())
-
-print("hero-scan.svg updated successfully!")
-
-import os
-
+# 2. TOOLBOX
 def make_toolbox():
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 290" width="100%" height="100%">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 290" width="100%" height="100%">
   <defs>
     <linearGradient id="boxBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-    <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-      .pill { rx: 6px; fill: #071324; stroke: #123356; stroke-width: 1; }
-      .pill-text { font-family: ui-monospace, monospace; font-size: 11px; fill: #38bdf8; }
-    </style>
+{SHARED_STYLE}
   </defs>
 
   <!-- Container -->
@@ -241,234 +198,247 @@ def make_toolbox():
   <!-- Command line prompt -->
   <text x="30" y="74" class="mono" font-size="12" fill="#22c55e">zine007mhidra@github <tspan fill="#64748b">:~$</tspan> <tspan fill="#f8fafc">ls skills/</tspan></text>
 
-  <!-- Skill Badges Row 1 -->
+  <!-- Skill Badges: modern Sans for badges -->
   <g transform="translate(30, 92)">
-    <!-- TypeScript -->
-    <rect x="0" y="0" width="105" height="28" class="pill"/>
-    <text x="14" y="18" class="pill-text" fill="#38bdf8">TypeScript</text>
+    <rect x="0" y="0" width="105" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="52" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">TypeScript</text>
 
-    <!-- Python -->
-    <rect x="115" y="0" width="80" height="28" class="pill"/>
-    <text x="130" y="18" class="pill-text" fill="#38bdf8">Python</text>
+    <rect x="115" y="0" width="80" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="155" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">Python</text>
 
-    <!-- Next.js -->
-    <rect x="205" y="0" width="85" height="28" class="pill"/>
-    <text x="220" y="18" class="pill-text" fill="#38bdf8">Next.js</text>
+    <rect x="205" y="0" width="85" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="247" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">Next.js</text>
 
-    <!-- FastAPI -->
-    <rect x="300" y="0" width="85" height="28" class="pill"/>
-    <text x="316" y="18" class="pill-text" fill="#38bdf8">FastAPI</text>
+    <rect x="300" y="0" width="85" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="342" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">FastAPI</text>
 
-    <!-- TailwindCSS -->
-    <rect x="395" y="0" width="110" height="28" class="pill"/>
-    <text x="408" y="18" class="pill-text" fill="#38bdf8">TailwindCSS</text>
+    <rect x="395" y="0" width="110" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="450" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">TailwindCSS</text>
 
-    <!-- PyTorch -->
-    <rect x="515" y="0" width="85" height="28" class="pill"/>
-    <text x="530" y="18" class="pill-text" fill="#38bdf8">PyTorch</text>
+    <rect x="515" y="0" width="85" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="557" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">PyTorch</text>
 
-    <!-- Docker -->
-    <rect x="610" y="0" width="80" height="28" class="pill"/>
-    <text x="625" y="18" class="pill-text" fill="#38bdf8">Docker</text>
+    <rect x="610" y="0" width="80" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="650" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">Docker</text>
 
-    <!-- Git -->
-    <rect x="700" y="0" width="60" height="28" class="pill"/>
-    <text x="715" y="18" class="pill-text" fill="#38bdf8">Git</text>
+    <rect x="700" y="0" width="60" height="28" rx="6" fill="#071324" stroke="#123356"/>
+    <text x="730" y="18" class="sans" font-size="11.5" font-weight="500" fill="#38bdf8" text-anchor="middle">Git</text>
   </g>
 
   <!-- Languages Percentage Breakdown Bar -->
   <g transform="translate(30, 155)">
     <text x="0" y="-8" class="mono" font-size="11" fill="#64748b" font-weight="600" letter-spacing="1">LANGUAGE FREQUENCY</text>
-    
-    <!-- Multi-segment bar (total width 820) -->
-    <!-- TS: 55% = 451px, PY: 33% = 270px, HTML: 10% = 82px, Other: 2% = 17px -->
     <rect x="0" y="0" width="820" height="10" rx="5" fill="#0e1726"/>
-    
     <path d="M 0 5 A 5 5 0 0 1 5 0 L 451 0 L 451 10 L 5 10 A 5 5 0 0 1 0 5 Z" fill="#3178c6"/>
     <rect x="453" y="0" width="268" height="10" fill="#00e5ff"/>
     <rect x="723" y="0" width="80" height="10" fill="#e34c26"/>
     <path d="M 805 0 L 815 0 A 5 5 0 0 1 820 5 A 5 5 0 0 1 815 10 L 805 10 Z" fill="#f1e05a"/>
   </g>
 
-  <!-- Stat Blocks underneath -->
-  <g transform="translate(30, 195)" class="mono">
-    <!-- Block 1: TS -->
+  <!-- Stat Blocks underneath: Sans headers + Mono percentages -->
+  <g transform="translate(30, 195)">
     <rect x="0" y="0" width="150" height="65" rx="6" fill="#050811" stroke="#0e233d"/>
     <circle cx="20" cy="22" r="4" fill="#3178c6"/>
-    <text x="32" y="26" font-size="12" fill="#f8fafc" font-weight="600">TypeScript</text>
-    <text x="32" y="48" font-size="16" fill="#38bdf8" font-weight="bold">55%</text>
+    <text x="32" y="26" class="sans" font-size="12.5" fill="#f8fafc" font-weight="600">TypeScript</text>
+    <text x="32" y="48" class="mono" font-size="16" fill="#38bdf8" font-weight="bold">55%</text>
 
-    <!-- Block 2: Python -->
     <rect x="165" y="0" width="150" height="65" rx="6" fill="#050811" stroke="#0e233d"/>
     <circle cx="185" cy="22" r="4" fill="#00e5ff"/>
-    <text x="197" y="26" font-size="12" fill="#f8fafc" font-weight="600">Python</text>
-    <text x="197" y="48" font-size="16" fill="#00e5ff" font-weight="bold">33%</text>
+    <text x="197" y="26" class="sans" font-size="12.5" fill="#f8fafc" font-weight="600">Python</text>
+    <text x="197" y="48" class="mono" font-size="16" fill="#00e5ff" font-weight="bold">33%</text>
 
-    <!-- Block 3: HTML -->
     <rect x="330" y="0" width="150" height="65" rx="6" fill="#050811" stroke="#0e233d"/>
     <circle cx="350" cy="22" r="4" fill="#e34c26"/>
-    <text x="362" y="26" font-size="12" fill="#f8fafc" font-weight="600">HTML</text>
-    <text x="362" y="48" font-size="16" fill="#e34c26" font-weight="bold">10%</text>
+    <text x="362" y="26" class="sans" font-size="12.5" fill="#f8fafc" font-weight="600">HTML</text>
+    <text x="362" y="48" class="mono" font-size="16" fill="#e34c26" font-weight="bold">10%</text>
 
-    <!-- Block 4: CSS -->
     <rect x="495" y="0" width="150" height="65" rx="6" fill="#050811" stroke="#0e233d"/>
     <circle cx="515" cy="22" r="4" fill="#563d7c"/>
-    <text x="527" y="26" font-size="12" fill="#f8fafc" font-weight="600">CSS</text>
-    <text x="527" y="48" font-size="16" fill="#a855f7" font-weight="bold">1%</text>
+    <text x="527" y="26" class="sans" font-size="12.5" fill="#f8fafc" font-weight="600">CSS</text>
+    <text x="527" y="48" class="mono" font-size="16" fill="#a855f7" font-weight="bold">1%</text>
 
-    <!-- Block 5: JavaScript -->
     <rect x="660" y="0" width="160" height="65" rx="6" fill="#050811" stroke="#0e233d"/>
     <circle cx="680" cy="22" r="4" fill="#f1e05a"/>
-    <text x="692" y="26" font-size="12" fill="#f8fafc" font-weight="600">JavaScript</text>
-    <text x="692" y="48" font-size="16" fill="#f1e05a" font-weight="bold">1%</text>
+    <text x="692" y="26" class="sans" font-size="12.5" fill="#f8fafc" font-weight="600">JavaScript</text>
+    <text x="692" y="48" class="mono" font-size="16" fill="#f1e05a" font-weight="bold">1%</text>
   </g>
 </svg>
 '''
 
+# 3. PROJECTS
 def make_projects():
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 390" width="100%" height="100%">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 395" width="100%" height="100%">
   <defs>
     <linearGradient id="projBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-    <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-      .pcard { rx: 8px; fill: #050811; stroke: #0f2b48; stroke-width: 1.2; }
-      .ptag { rx: 4px; fill: #081a30; stroke: #153b66; stroke-width: 0.8; }
-      .ptag-txt { font-family: ui-monospace, monospace; font-size: 10px; fill: #38bdf8; }
-    </style>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#091322"/>
+      <stop offset="100%" stop-color="#040810"/>
+    </linearGradient>
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+{SHARED_STYLE}
   </defs>
 
   <!-- Container -->
-  <rect x="1" y="1" width="878" height="388" rx="10" fill="url(#projBg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="1" y="1" width="878" height="393" rx="10" fill="url(#projBg)" stroke="#1e293b" stroke-width="1.5"/>
 
   <!-- Window Header -->
   <circle cx="24" cy="22" r="5" fill="#ff5f56"/>
   <circle cx="42" cy="22" r="5" fill="#ffbd2e"/>
   <circle cx="60" cy="22" r="5" fill="#27c93f"/>
-  <text x="85" y="26" class="mono" font-size="12" fill="#00e5ff" font-weight="bold">PROJECTS.LIST <tspan fill="#64748b" font-weight="normal">./projects.sh --all</tspan></text>
+  <text x="85" y="26" class="mono" font-size="12" fill="#00e5ff" font-weight="bold" letter-spacing="0.5">PROJECTS.LIST <tspan fill="#64748b" font-weight="normal">./projects.sh --all --status=live</tspan></text>
   <text x="795" y="26" class="mono" font-size="11" fill="#64748b">4 projects</text>
   <line x1="1" y1="42" x2="879" y2="42" stroke="#172338" stroke-width="1"/>
 
-  <!-- 2x2 Grid: Row 1 -->
+  <!-- 2x2 Grid -->
   <!-- Card 1: F1LapStratSim -->
   <g transform="translate(20, 56)">
-    <rect x="0" y="0" width="405" height="150" class="pcard"/>
-    <circle cx="18" cy="20" r="3.5" fill="#00e5ff"/>
-    <text x="28" y="24" class="mono" font-size="11" fill="#64748b">Zine007MHIDRA/F1LapStratSim</text>
-
-    <text x="18" y="52" class="mono" font-size="16" fill="#f8fafc" font-weight="bold">F1LapStratSim <tspan fill="#00e5ff">_</tspan></text>
-    <text x="18" y="74" class="mono" font-size="10.5" fill="#94a3b8">Vehicle dynamics simulator for F1 lap times,</text>
-    <text x="18" y="90" class="mono" font-size="10.5" fill="#94a3b8">tyre degradation, and pit strategy (Monza).</text>
-
-    <!-- Tags -->
-    <rect x="18" y="108" width="70" height="20" class="ptag"/>
-    <text x="28" y="122" class="ptag-txt">formula1</text>
+    <rect x="0" y="0" width="405" height="152" class="pcard"/>
+    <line x1="8" y1="1" x2="397" y2="1" stroke="rgba(0, 229, 255, 0.2)" stroke-width="1"/>
     
-    <rect x="96" y="108" width="72" height="20" class="ptag"/>
-    <text x="105" y="122" class="ptag-txt">simulator</text>
+    <circle cx="18" cy="20" r="3.5" fill="#00e5ff" filter="url(#cyanGlow)"/>
+    <text x="28" y="24" class="mono" font-size="11" fill="#64748b">Zine007MHIDRA/F1LapStratSim</text>
+    <circle cx="390" cy="20" r="3" fill="#00e5ff" opacity="0.4"/>
 
-    <text x="18" y="140" class="mono" font-size="11" fill="#f1e05a">★ 2</text>
-    <text x="50" y="140" class="mono" font-size="10" fill="#64748b">Python</text>
+    <!-- Title in Modern Sans Bold -->
+    <text x="18" y="52" class="sans" font-size="16" fill="#f8fafc" font-weight="700">F1LapStratSim <tspan class="mono" fill="#00e5ff" font-weight="normal">_</tspan></text>
+    <!-- Description in Modern Sans -->
+    <text x="18" y="73" class="sans" font-size="11.5" fill="#94a3b8">Vehicle dynamics simulator for F1 lap times,</text>
+    <text x="18" y="89" class="sans" font-size="11.5" fill="#94a3b8">tyre degradation, and pit strategy (Monza).</text>
 
-    <!-- Circular Gauge: 100% Python -->
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#0d2138" stroke-width="7"/>
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#00e5ff" stroke-width="7" stroke-dasharray="201" stroke-dashoffset="0" stroke-linecap="round"/>
-    <text x="345" y="80" class="mono" font-size="12" fill="#00e5ff" font-weight="bold" text-anchor="middle">100%</text>
+    <!-- Refined Capsule Tags -->
+    <rect x="18" y="106" width="76" height="22" class="ptag"/>
+    <text x="56" y="121" class="ptag-txt">formula1</text>
+    
+    <rect x="102" y="106" width="80" height="22" class="ptag"/>
+    <text x="142" y="121" class="ptag-txt">simulator</text>
+
+    <!-- Meta Info -->
+    <text x="18" y="142" class="mono" font-size="11" fill="#f1e05a">★ 2</text>
+    <text x="44" y="142" class="sans" font-size="11" fill="#64748b">· updated 2w ago</text>
+
+    <!-- Donut Ring: 100% Python -->
+    <circle cx="345" cy="78" r="32" fill="none" stroke="#0d2138" stroke-width="6.5"/>
+    <circle cx="345" cy="78" r="32" fill="none" stroke="#00e5ff" stroke-width="6.5" stroke-dasharray="201.1" stroke-dashoffset="0" stroke-linecap="round"/>
+    <text x="345" y="83" class="mono" font-size="12" fill="#00e5ff" font-weight="bold" text-anchor="middle">100%</text>
   </g>
 
   <!-- Card 2: HoneyGrid -->
   <g transform="translate(455, 56)">
-    <rect x="0" y="0" width="405" height="150" class="pcard"/>
+    <rect x="0" y="0" width="405" height="152" class="pcard"/>
+    <line x1="8" y1="1" x2="397" y2="1" stroke="rgba(249, 115, 22, 0.2)" stroke-width="1"/>
+
     <circle cx="18" cy="20" r="3.5" fill="#f97316"/>
     <text x="28" y="24" class="mono" font-size="11" fill="#64748b">Zine007MHIDRA/HoneyGrid</text>
+    <circle cx="390" cy="20" r="3" fill="#f97316" opacity="0.4"/>
 
-    <text x="18" y="52" class="mono" font-size="16" fill="#f8fafc" font-weight="bold">HoneyGrid <tspan fill="#f97316">_</tspan></text>
-    <text x="18" y="74" class="mono" font-size="10.5" fill="#94a3b8">Python grid optimization, compute pipeline</text>
-    <text x="18" y="90" class="mono" font-size="10.5" fill="#94a3b8">and distributed dataset orchestration.</text>
+    <text x="18" y="52" class="sans" font-size="16" fill="#f8fafc" font-weight="700">HoneyGrid <tspan class="mono" fill="#f97316" font-weight="normal">_</tspan></text>
+    <text x="18" y="73" class="sans" font-size="11.5" fill="#94a3b8">Python grid optimization, compute pipeline</text>
+    <text x="18" y="89" class="sans" font-size="11.5" fill="#94a3b8">and distributed dataset orchestration.</text>
 
-    <!-- Tags -->
-    <rect x="18" y="108" width="60" height="20" class="ptag"/>
-    <text x="28" y="122" class="ptag-txt">python</text>
+    <rect x="18" y="106" width="62" height="22" class="ptag"/>
+    <text x="49" y="121" class="ptag-txt">python</text>
     
-    <rect x="86" y="108" width="70" height="20" class="ptag"/>
-    <text x="96" y="122" class="ptag-txt">grid-core</text>
+    <rect x="88" y="106" width="78" height="22" class="ptag"/>
+    <text x="127" y="121" class="ptag-txt">grid-core</text>
 
-    <text x="18" y="140" class="mono" font-size="11" fill="#f1e05a">★ 1</text>
-    <text x="50" y="140" class="mono" font-size="10" fill="#64748b">Python</text>
+    <text x="18" y="142" class="mono" font-size="11" fill="#f1e05a">★ 1</text>
+    <text x="44" y="142" class="sans" font-size="11" fill="#64748b">· updated 1mo ago</text>
 
-    <!-- Circular Gauge: 59% -->
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#0d2138" stroke-width="7"/>
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#f97316" stroke-width="7" stroke-dasharray="201" stroke-dashoffset="82" stroke-linecap="round"/>
-    <text x="345" y="80" class="mono" font-size="12" fill="#f97316" font-weight="bold" text-anchor="middle">59%</text>
+    <g transform="rotate(-90 345 78)">
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#0d2138" stroke-width="6.5"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#f97316" stroke-width="6.5" stroke-dasharray="118.6 82.5" stroke-dashoffset="0"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#00e5ff" stroke-width="6.5" stroke-dasharray="66.3 134.8" stroke-dashoffset="-118.6"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#22c55e" stroke-width="6.5" stroke-dasharray="16.1 185.0" stroke-dashoffset="-184.9"/>
+    </g>
+    <text x="345" y="83" class="mono" font-size="12" fill="#f97316" font-weight="bold" text-anchor="middle">59%</text>
   </g>
 
-  <!-- 2x2 Grid: Row 2 -->
   <!-- Card 3: portfolio -->
-  <g transform="translate(20, 220)">
-    <rect x="0" y="0" width="405" height="150" class="pcard"/>
+  <g transform="translate(20, 224)">
+    <rect x="0" y="0" width="405" height="152" class="pcard"/>
+    <line x1="8" y1="1" x2="397" y2="1" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1"/>
+
     <circle cx="18" cy="20" r="3.5" fill="#38bdf8"/>
     <text x="28" y="24" class="mono" font-size="11" fill="#64748b">Zine007MHIDRA/portfolio</text>
+    <circle cx="390" cy="20" r="3" fill="#38bdf8" opacity="0.4"/>
 
-    <text x="18" y="52" class="mono" font-size="16" fill="#f8fafc" font-weight="bold">portfolio <tspan fill="#38bdf8">_</tspan></text>
-    <text x="18" y="74" class="mono" font-size="10.5" fill="#94a3b8">Interactive developer portfolio showcasing</text>
-    <text x="18" y="90" class="mono" font-size="10.5" fill="#94a3b8">AI systems, simulation work, and public builds.</text>
+    <text x="18" y="52" class="sans" font-size="16" fill="#f8fafc" font-weight="700">portfolio <tspan class="mono" fill="#38bdf8" font-weight="normal">_</tspan></text>
+    <text x="18" y="73" class="sans" font-size="11.5" fill="#94a3b8">Interactive developer portfolio showcasing</text>
+    <text x="18" y="89" class="sans" font-size="11.5" fill="#94a3b8">AI systems, simulation work, and public builds.</text>
 
-    <!-- Tags -->
-    <rect x="18" y="108" width="55" height="20" class="ptag"/>
-    <text x="28" y="122" class="ptag-txt">nextjs</text>
+    <rect x="18" y="106" width="62" height="22" class="ptag"/>
+    <text x="49" y="121" class="ptag-txt">nextjs</text>
     
-    <rect x="81" y="108" width="75" height="20" class="ptag"/>
-    <text x="90" y="122" class="ptag-txt">typescript</text>
+    <rect x="88" y="106" width="86" height="22" class="ptag"/>
+    <text x="131" y="121" class="ptag-txt">typescript</text>
 
-    <text x="18" y="140" class="mono" font-size="11" fill="#64748b">★ 0</text>
-    <text x="50" y="140" class="mono" font-size="10" fill="#64748b">TypeScript</text>
+    <text x="18" y="142" class="mono" font-size="11" fill="#64748b">★ 0</text>
+    <text x="44" y="142" class="sans" font-size="11" fill="#64748b">· updated 1d ago</text>
 
-    <!-- Circular Gauge: 92% -->
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#0d2138" stroke-width="7"/>
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#38bdf8" stroke-width="7" stroke-dasharray="201" stroke-dashoffset="16" stroke-linecap="round"/>
-    <text x="345" y="80" class="mono" font-size="12" fill="#38bdf8" font-weight="bold" text-anchor="middle">92%</text>
+    <g transform="rotate(-90 345 78)">
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#0d2138" stroke-width="6.5"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#38bdf8" stroke-width="6.5" stroke-dasharray="185.0 16.1" stroke-dashoffset="0"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#a855f7" stroke-width="6.5" stroke-dasharray="12.1 189.0" stroke-dashoffset="-185.0"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#e34c26" stroke-width="6.5" stroke-dasharray="4.0 197.1" stroke-dashoffset="-197.1"/>
+    </g>
+    <text x="345" y="83" class="mono" font-size="12" fill="#38bdf8" font-weight="bold" text-anchor="middle">92%</text>
   </g>
 
   <!-- Card 4: aether-audiophile -->
-  <g transform="translate(455, 220)">
-    <rect x="0" y="0" width="405" height="150" class="pcard"/>
+  <g transform="translate(455, 224)">
+    <rect x="0" y="0" width="405" height="152" class="pcard"/>
+    <line x1="8" y1="1" x2="397" y2="1" stroke="rgba(168, 85, 247, 0.2)" stroke-width="1"/>
+
     <circle cx="18" cy="20" r="3.5" fill="#a855f7"/>
     <text x="28" y="24" class="mono" font-size="11" fill="#64748b">Zine007MHIDRA/aether-audiophile</text>
+    <circle cx="390" cy="20" r="3" fill="#a855f7" opacity="0.4"/>
 
-    <text x="18" y="52" class="mono" font-size="16" fill="#f8fafc" font-weight="bold">aether-audiophile <tspan fill="#a855f7">_</tspan></text>
-    <text x="18" y="74" class="mono" font-size="10.5" fill="#94a3b8">High-fidelity web application with refined</text>
-    <text x="18" y="90" class="mono" font-size="10.5" fill="#94a3b8">audiophile acoustic staging and modern UI.</text>
+    <text x="18" y="52" class="sans" font-size="16" fill="#f8fafc" font-weight="700">aether-audiophile <tspan class="mono" fill="#a855f7" font-weight="normal">_</tspan></text>
+    <text x="18" y="73" class="sans" font-size="11.5" fill="#94a3b8">High-fidelity web application with refined</text>
+    <text x="18" y="89" class="sans" font-size="11.5" fill="#94a3b8">audiophile acoustic staging and modern UI.</text>
 
-    <!-- Tags -->
-    <rect x="18" y="108" width="75" height="20" class="ptag"/>
-    <text x="27" y="122" class="ptag-txt">typescript</text>
+    <rect x="18" y="106" width="86" height="22" class="ptag"/>
+    <text x="61" y="121" class="ptag-txt">typescript</text>
     
-    <rect x="101" y="108" width="55" height="20" class="ptag"/>
-    <text x="110" y="122" class="ptag-txt">audio</text>
+    <rect x="112" y="106" width="58" height="22" class="ptag"/>
+    <text x="141" y="121" class="ptag-txt">audio</text>
 
-    <text x="18" y="140" class="mono" font-size="11" fill="#64748b">★ 0</text>
-    <text x="50" y="140" class="mono" font-size="10" fill="#64748b">TypeScript</text>
+    <text x="18" y="142" class="mono" font-size="11" fill="#64748b">★ 0</text>
+    <text x="44" y="142" class="sans" font-size="11" fill="#64748b">· updated 3w ago</text>
 
-    <!-- Circular Gauge: 87% -->
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#0d2138" stroke-width="7"/>
-    <circle cx="345" cy="75" r="32" fill="none" stroke="#a855f7" stroke-width="7" stroke-dasharray="201" stroke-dashoffset="26" stroke-linecap="round"/>
-    <text x="345" y="80" class="mono" font-size="12" fill="#a855f7" font-weight="bold" text-anchor="middle">87%</text>
+    <g transform="rotate(-90 345 78)">
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#0d2138" stroke-width="6.5"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#a855f7" stroke-width="6.5" stroke-dasharray="174.9 26.2" stroke-dashoffset="0"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#00e5ff" stroke-width="6.5" stroke-dasharray="20.1 181.0" stroke-dashoffset="-174.9"/>
+      <circle cx="345" cy="78" r="32" fill="none" stroke="#f1e05a" stroke-width="6.5" stroke-dasharray="6.0 195.1" stroke-dashoffset="-195.0"/>
+    </g>
+    <text x="345" y="83" class="mono" font-size="12" fill="#a855f7" font-weight="bold" text-anchor="middle">87%</text>
   </g>
+
+  <!-- Corner Tech Accents -->
+  <path d="M 865 378 L 865 385 L 857 385" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M 15 378 L 15 385 L 23 385" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.6"/>
 </svg>
 '''
 
+# 4. NEOFETCH
 def make_neofetch():
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 270" width="100%" height="100%">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 270" width="100%" height="100%">
   <defs>
     <linearGradient id="neoBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-    <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-    </style>
+{SHARED_STYLE}
   </defs>
 
   <!-- Container -->
@@ -491,31 +461,28 @@ def make_neofetch():
   </g>
 
   <!-- Right: Neofetch Info Rows -->
-  <g transform="translate(290, 75)" class="mono">
-    <!-- Header -->
-    <text x="0" y="20" font-size="14" font-weight="bold" fill="#00e5ff">zine007mhidra <tspan fill="#64748b" font-weight="normal">@github</tspan></text>
+  <g transform="translate(290, 75)">
+    <text x="0" y="20" class="mono" font-size="14" font-weight="bold" fill="#00e5ff">zine007mhidra <tspan fill="#64748b" font-weight="normal">@github</tspan></text>
     <line x1="0" y1="30" x2="520" y2="30" stroke="#172e48" stroke-width="1"/>
 
-    <!-- Spec rows -->
-    <text x="0" y="55" font-size="12" fill="#38bdf8">Name</text>
-    <text x="120" y="55" font-size="12" fill="#f8fafc">Zine El Abidine MHIDRA</text>
+    <text x="0" y="55" class="mono" font-size="12" fill="#38bdf8">Name</text>
+    <text x="120" y="55" class="sans" font-size="13" font-weight="600" fill="#f8fafc">Zine El Abidine MHIDRA</text>
 
-    <text x="0" y="78" font-size="12" fill="#38bdf8">Role</text>
-    <text x="120" y="78" font-size="12" fill="#e2e8f0">AI &amp; Full-Stack Developer</text>
+    <text x="0" y="78" class="mono" font-size="12" fill="#38bdf8">Role</text>
+    <text x="120" y="78" class="sans" font-size="12.5" fill="#e2e8f0" font-weight="500">AI &amp; Full-Stack Developer</text>
 
-    <text x="0" y="101" font-size="12" fill="#38bdf8">Stars</text>
-    <text x="120" y="101" font-size="12" fill="#f8fafc">3</text>
+    <text x="0" y="101" class="mono" font-size="12" fill="#38bdf8">Stars</text>
+    <text x="120" y="101" class="sans" font-size="12.5" fill="#f8fafc">3</text>
 
-    <text x="0" y="124" font-size="12" fill="#38bdf8">Repos</text>
-    <text x="120" y="124" font-size="12" fill="#f8fafc">12</text>
+    <text x="0" y="124" class="mono" font-size="12" fill="#38bdf8">Repos</text>
+    <text x="120" y="124" class="sans" font-size="12.5" fill="#f8fafc">12</text>
 
-    <text x="0" y="147" font-size="12" fill="#38bdf8">Top Lang</text>
-    <text x="120" y="147" font-size="12" fill="#38bdf8">TypeScript</text>
+    <text x="0" y="147" class="mono" font-size="12" fill="#38bdf8">Top Lang</text>
+    <text x="120" y="147" class="sans" font-size="12.5" fill="#38bdf8" font-weight="500">TypeScript</text>
 
-    <text x="0" y="170" font-size="12" fill="#38bdf8">Activity</text>
-    <text x="120" y="170" font-size="12" fill="#00e5ff" font-weight="bold">158 contributions</text>
+    <text x="0" y="170" class="mono" font-size="12" fill="#38bdf8">Activity</text>
+    <text x="120" y="170" class="mono" font-size="12" fill="#00e5ff" font-weight="bold">158 contributions</text>
 
-    <!-- Color Palette Swatches -->
     <g transform="translate(0, 185)">
       <rect x="0" y="0" width="22" height="12" rx="2" fill="#00e5ff"/>
       <rect x="26" y="0" width="22" height="12" rx="2" fill="#38bdf8"/>
@@ -528,79 +495,15 @@ def make_neofetch():
 </svg>
 '''
 
-def make_contribution_trail():
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 170" width="100%" height="100%">
-  <defs>
-    <linearGradient id="trailBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#070b14"/>
-      <stop offset="100%" stop-color="#0a1222"/>
-    </linearGradient>
-    <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-    </style>
-  </defs>
-
-  <!-- Container -->
-  <rect x="1" y="1" width="878" height="168" rx="10" fill="url(#trailBg)" stroke="#1e293b" stroke-width="1.5"/>
-
-  <!-- Header -->
-  <text x="30" y="32" class="mono" font-size="15" font-weight="bold" fill="#00e5ff">Contribution Activity</text>
-  <text x="30" y="48" class="mono" font-size="11" fill="#94a3b8">158 contributions in the last year</text>
-
-  <!-- Legend -->
-  <g transform="translate(710, 22)" class="mono" font-size="10" fill="#64748b">
-    <text x="0" y="10">Less</text>
-    <rect x="30" y="0" width="10" height="10" rx="2" fill="#0e1f36"/>
-    <rect x="44" y="0" width="10" height="10" rx="2" fill="#0284c7"/>
-    <rect x="58" y="0" width="10" height="10" rx="2" fill="#0ea5e9"/>
-    <rect x="72" y="0" width="10" height="10" rx="2" fill="#38bdf8"/>
-    <rect x="86" y="0" width="10" height="10" rx="2" fill="#00e5ff"/>
-    <text x="104" y="10">More</text>
-  </g>
-
-  <!-- Heatmap Grid: 50 weeks x 7 days -->
-  <g transform="translate(30, 68)">
-''' + generate_heatmap_cells() + '''
-  </g>
-</svg>
-'''
-
-def generate_heatmap_cells():
-    # 50 columns x 7 rows
-    import random
-    random.seed(42)
-    # Generate realistic clustering of 158 contributions across 32 active days
-    colors = ["#0e1f36", "#0284c7", "#0ea5e9", "#38bdf8", "#00e5ff"]
-    cells = []
-    
-    # Let's map active weeks (e.g. weeks 30-50 more dense)
-    active_count = 0
-    for col in range(50):
-        for row in range(7):
-            x = col * 16
-            y = row * 12
-            # default dark empty
-            c = colors[0]
-            # create clustered activity mainly in weeks 25-49
-            if col > 32 and random.random() < 0.28 and active_count < 32:
-                intensity = random.choice([1, 2, 3, 4])
-                c = colors[intensity]
-                active_count += 1
-            cells.append(f'    <rect x="{x}" y="{y}" width="12" height="9" rx="2" fill="{c}"/>')
-    return "\n".join(cells)
-
+# 5. CONNECT
 def make_connect():
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 120" width="100%" height="100%">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 120" width="100%" height="100%">
   <defs>
     <linearGradient id="connBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-    <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-      .cbtn { rx: 20px; fill: #07172e; stroke: #00e5ff; stroke-width: 1.2; }
-      .cbtn-txt { font-family: ui-monospace, monospace; font-size: 12px; fill: #f8fafc; font-weight: 600; }
-    </style>
+{SHARED_STYLE}
   </defs>
 
   <!-- Container -->
@@ -610,52 +513,53 @@ def make_connect():
   <g transform="translate(60, 40)">
     <!-- GitHub Button -->
     <g transform="translate(0, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#00e5ff" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">G</text>
-      <text x="44" y="24" class="cbtn-txt">@Zine007MHIDRA</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">@Zine007MHIDRA</text>
     </g>
 
     <!-- Portfolio Button -->
     <g transform="translate(180, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn" stroke="#38bdf8"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#38bdf8" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#38bdf8" text-anchor="middle" font-weight="bold">↗</text>
-      <text x="44" y="24" class="cbtn-txt">Live Portfolio</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">Live Portfolio</text>
     </g>
 
     <!-- LinkedIn Button -->
     <g transform="translate(360, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn" stroke="#0ea5e9"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#0ea5e9" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#0ea5e9" text-anchor="middle" font-weight="bold">in</text>
-      <text x="44" y="24" class="cbtn-txt">LinkedIn Profile</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">LinkedIn Profile</text>
     </g>
 
     <!-- Email Button -->
     <g transform="translate(540, 0)">
-      <rect x="0" y="0" width="220" height="40" class="cbtn" stroke="#22d3ee"/>
+      <rect x="0" y="0" width="220" height="40" rx="20" fill="#07172e" stroke="#22d3ee" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#22d3ee" text-anchor="middle" font-weight="bold">@</text>
-      <text x="44" y="24" class="cbtn-txt">zine.mhidra@gmail.com</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">zine.mhidra@gmail.com</text>
     </g>
   </g>
 </svg>
 '''
 
-with open('assets/toolbox.svg', 'w', encoding='utf-8') as f:
-    f.write(make_toolbox())
+# Write assets
+files = {
+    'assets/hero-scan.svg': make_hero_scan(),
+    'assets/toolbox.svg': make_toolbox(),
+    'assets/projects.svg': make_projects(),
+    'assets/neofetch.svg': make_neofetch(),
+    'assets/connect.svg': make_connect()
+}
 
-with open('assets/projects.svg', 'w', encoding='utf-8') as f:
-    f.write(make_projects())
-
-with open('assets/neofetch.svg', 'w', encoding='utf-8') as f:
-    f.write(make_neofetch())
-
-with open('assets/contribution-trail.svg', 'w', encoding='utf-8') as f:
-    f.write(make_contribution_trail())
-
-with open('assets/connect.svg', 'w', encoding='utf-8') as f:
-    f.write(make_connect())
-
-print("Created all SVG assets!")
+for path, content in files.items():
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    try:
+        ET.parse(path)
+        print(f"VALID & WRITTEN: {path}")
+    except Exception as e:
+        print(f"ERROR in {path}: {e}")

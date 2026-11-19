@@ -4,11 +4,24 @@
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
+
     <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
-      .cbtn { rx: 20px; fill: #07172e; stroke: #00e5ff; stroke-width: 1.2; }
-      .cbtn-txt { font-family: ui-monospace, monospace; font-size: 12px; fill: #f8fafc; font-weight: 600; }
+      text {
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .mono {
+        font-family: "Cascadia Code", "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      }
+      .sans {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .pcard { rx: 8px; fill: url(#cardGrad); stroke: #0f2b48; stroke-width: 1.2; }
+      .ptag { rx: 11px; fill: #07172b; stroke: #123861; stroke-width: 1; }
+      .ptag-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif; font-size: 10.5px; font-weight: 500; fill: #38bdf8; text-anchor: middle; }
     </style>
+
   </defs>
 
   <!-- Container -->
@@ -18,34 +31,34 @@
   <g transform="translate(60, 40)">
     <!-- GitHub Button -->
     <g transform="translate(0, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#00e5ff" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">G</text>
-      <text x="44" y="24" class="cbtn-txt">@Zine007MHIDRA</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">@Zine007MHIDRA</text>
     </g>
 
     <!-- Portfolio Button -->
     <g transform="translate(180, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn" stroke="#38bdf8"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#38bdf8" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#38bdf8" text-anchor="middle" font-weight="bold">↗</text>
-      <text x="44" y="24" class="cbtn-txt">Live Portfolio</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">Live Portfolio</text>
     </g>
 
     <!-- LinkedIn Button -->
     <g transform="translate(360, 0)">
-      <rect x="0" y="0" width="160" height="40" class="cbtn" stroke="#0ea5e9"/>
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#0ea5e9" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#0ea5e9" text-anchor="middle" font-weight="bold">in</text>
-      <text x="44" y="24" class="cbtn-txt">LinkedIn Profile</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">LinkedIn Profile</text>
     </g>
 
     <!-- Email Button -->
     <g transform="translate(540, 0)">
-      <rect x="0" y="0" width="220" height="40" class="cbtn" stroke="#22d3ee"/>
+      <rect x="0" y="0" width="220" height="40" rx="20" fill="#07172e" stroke="#22d3ee" stroke-width="1.2"/>
       <circle cx="24" cy="20" r="10" fill="#0b2447"/>
       <text x="24" y="24" class="mono" font-size="11" fill="#22d3ee" text-anchor="middle" font-weight="bold">@</text>
-      <text x="44" y="24" class="cbtn-txt">zine.mhidra@gmail.com</text>
+      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">zine.mhidra@gmail.com</text>
     </g>
   </g>
 </svg>
