@@ -1,3 +1,77 @@
+COLS = 21
+ROWS = 15
+
+grid = [[0 for _ in range(COLS)] for _ in range(ROWS)]
+
+# Z: cols 1..9
+for r in [1, 2]:
+    for c in range(1, 10):
+        grid[r][c] = 1
+
+diag = [
+    (3, 7), (3, 8),
+    (4, 6), (4, 7),
+    (5, 5), (5, 6),
+    (6, 5), (6, 6),
+    (7, 4), (7, 5),
+    (8, 3), (8, 4),
+    (9, 3), (9, 4),
+    (10, 2), (10, 3),
+    (11, 1), (11, 2)
+]
+for r, c in diag:
+    grid[r][c] = 1
+
+for r in [12, 13]:
+    for c in range(1, 10):
+        grid[r][c] = 1
+
+# M: cols 11..19
+for r in range(1, 14):
+    grid[r][11] = 1
+    grid[r][12] = 1
+    grid[r][18] = 1
+    grid[r][19] = 1
+
+m_diag = [
+    (2, 13), (2, 17),
+    (3, 13), (3, 17),
+    (4, 14), (4, 16),
+    (5, 14), (5, 16),
+    (6, 15), (7, 15)
+]
+for r, c in m_diag:
+    grid[r][c] = 1
+
+def generate_pixel_matrix_svg():
+    cell_size = 11
+    gap = 2.5
+    pitch = cell_size + gap
+    start_x = 39
+    start_y = 150
+
+    elements = []
+    # First render all unlit cells
+    for r in range(ROWS):
+        for c in range(COLS):
+            x = start_x + c * pitch
+            y = start_y + r * pitch
+            if grid[r][c] == 0:
+                elements.append(f'    <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="#061220" stroke="#0b233a" stroke-width="0.6" opacity="0.6"/>')
+
+    # Then render lit cells on top with glow
+    elements.append('    <!-- Lit Cells -->')
+    elements.append('    <g filter="url(#glow)">')
+    for r in range(ROWS):
+        for c in range(COLS):
+            x = start_x + c * pitch
+            y = start_y + r * pitch
+            if grid[r][c] == 1:
+                elements.append(f'      <rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2" fill="#00e5ff" stroke="#38bdf8" stroke-width="0.8"/>')
+    elements.append('    </g>')
+    return '\n'.join(elements)
+
+
 import os
 
 ZM_LINES = [
@@ -20,7 +94,9 @@ ZM_LINES = [
 ]
 
 def make_hero_scan():
-    svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="100%">
+    pixel_matrix = generate_pixel_matrix_svg()
+    
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="100%">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
@@ -34,7 +110,7 @@ def make_hero_scan():
       </feMerge>
     </filter>
     <style>
-      .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+      .mono {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }}
     </style>
   </defs>
 
@@ -59,28 +135,23 @@ def make_hero_scan():
   <text x="36" y="86" class="mono" font-size="11" font-weight="700" fill="#00e5ff" letter-spacing="1.5">VISUAL.MAP</text>
   <line x1="36" y1="94" x2="324" y2="94" stroke="#0e233d" stroke-width="1"/>
 
-  <!-- Subtle Grid Pattern in Left Card -->
-  <g stroke="#08182b" stroke-width="0.75" opacity="0.6">
-    <line x1="20" y1="140" x2="340" y2="140"/>
-    <line x1="20" y1="190" x2="340" y2="190"/>
-    <line x1="20" y1="240" x2="340" y2="240"/>
-    <line x1="20" y1="290" x2="340" y2="290"/>
-    <line x1="20" y1="340" x2="340" y2="340"/>
-    <line x1="75" y1="58" x2="75" y2="420"/>
-    <line x1="130" y1="58" x2="130" y2="420"/>
-    <line x1="185" y1="58" x2="185" y2="420"/>
-    <line x1="240" y1="58" x2="240" y2="420"/>
-    <line x1="295" y1="58" x2="295" y2="420"/>
+  <!-- Diagnostic Scan Header -->
+  <text x="36" y="116" class="mono" font-size="10" fill="#38bdf8" opacity="0.85">SCAN: IDENTITY_MATRIX [ZM-007]</text>
+  <text x="36" y="131" class="mono" font-size="9" fill="#64748b">STATUS: ACTIVE // 21x15 LED_GRID</text>
+
+  <!-- Vector Pixel Matrix Monogram (ZM) -->
+  <g id="pixel-monogram">
+{pixel_matrix}
   </g>
 
-  <!-- ZM ASCII Monogram Block -->
-  <g class="mono" font-size="10.5" fill="#00e5ff" font-weight="bold" letter-spacing="0.4" opacity="0.95" filter="url(#glow)">
-'''
-    start_y = 138
-    for i, line in enumerate(ZM_LINES):
-        svg += f'    <text x="44" y="{start_y + i * 16}">{line}</text>\n'
+  <!-- Sub-label -->
+  <text x="180" y="380" class="mono" font-size="10.5" fill="#38bdf8" letter-spacing="2" text-anchor="middle" font-weight="600">ID: ZINE EL ABIDINE MHIDRA</text>
 
-    svg += '''  </g>
+  <!-- Corner Brackets on VISUAL.MAP -->
+  <path d="M 32 400 L 32 410 L 42 410" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
+  <path d="M 328 400 L 328 410 L 318 410" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
+  <path d="M 32 70 L 32 64 L 42 64" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
+  <path d="M 328 70 L 328 64 L 318 64" stroke="#00e5ff" stroke-width="1.2" fill="none" opacity="0.8"/>
 
   <!-- Right Card: SYSTEM.INFO -->
   <rect x="355" y="58" width="505" height="362" rx="8" fill="#050811" stroke="#0e233d" stroke-width="1.2"/>
@@ -132,7 +203,6 @@ def make_hero_scan():
 
   <!-- Watermark border corner accent -->
   <path d="M 850 410 L 850 418 L 842 418" stroke="#00e5ff" stroke-width="1.5" fill="none"/>
-  <path d="M 30 410 L 30 418 L 38 418" stroke="#00e5ff" stroke-width="1.5" fill="none"/>
 </svg>
 '''
     return svg
