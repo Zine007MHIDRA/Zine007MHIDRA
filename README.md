@@ -69,7 +69,7 @@
       <h3>🌐 <a href="https://github.com/Zine007MHIDRA/portfolio">portfolio</a></h3>
       <p>Developer portfolio presenting full-stack builds, physical simulations, and real-time interactive UI experiments.</p>
       <p><code>TypeScript</code> &nbsp; <code>Next.js</code> &nbsp; <code>TailwindCSS</code></p>
-      <p>🔗 <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">Selected Work Live ↗</a></p>
+      <p>🔗 <a href="https://portfolio-red-eight-eustdatv5d.vercel.app">Live Portfolio ↗</a></p>
     </td>
     <td width="50%" valign="top">
       <h3>🎧 <a href="https://github.com/Zine007MHIDRA/aether-audiophile">aether-audiophile</a></h3>
@@ -110,7 +110,7 @@
 <br />
 
 <div align="center">
-  <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work"><strong>Selected Work ↗</strong></a> &nbsp;&bull;&nbsp;
+  <a href="https://portfolio-red-eight-eustdatv5d.vercel.app"><strong>Portfolio ↗</strong></a> &nbsp;&bull;&nbsp;
   <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/"><strong>LinkedIn Profile ↗</strong></a> &nbsp;&bull;&nbsp;
   <a href="mailto:zine.mhidra@gmail.com"><strong>zine.mhidra@gmail.com</strong></a>
 </div>
