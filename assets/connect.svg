@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 120" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 880 120" width="100%" height="100%">
   <defs>
     <linearGradient id="connBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#070b14"/>
       <stop offset="100%" stop-color="#0a1222"/>
     </linearGradient>
-
     <style>
       text {
         text-rendering: geometricPrecision;
@@ -17,48 +16,54 @@
       .sans {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
       }
-      .pcard { rx: 8px; fill: url(#cardGrad); stroke: #0f2b48; stroke-width: 1.2; }
-      .ptag { rx: 11px; fill: #07172b; stroke: #123861; stroke-width: 1; }
-      .ptag-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif; font-size: 10.5px; font-weight: 500; fill: #38bdf8; text-anchor: middle; }
+      .cbtn-link { cursor: pointer; text-decoration: none; }
+      .cbtn-link:hover .cbtn { fill: #0b254a; stroke: #00e5ff; }
     </style>
-
   </defs>
 
   <!-- Container -->
   <rect x="1" y="1" width="878" height="118" rx="10" fill="url(#connBg)" stroke="#1e293b" stroke-width="1.5"/>
 
-  <!-- Centered Pill Buttons -->
+  <!-- Centered Interactive Pill Buttons -->
   <g transform="translate(60, 40)">
     <!-- GitHub Button -->
-    <g transform="translate(0, 0)">
-      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#00e5ff" stroke-width="1.2"/>
-      <circle cx="24" cy="20" r="10" fill="#0b2447"/>
-      <text x="24" y="24" class="mono" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">G</text>
-      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">@Zine007MHIDRA</text>
-    </g>
+    <a xlink:href="https://github.com/Zine007MHIDRA" href="https://github.com/Zine007MHIDRA" target="_blank" class="cbtn-link">
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="160" height="40" rx="20" class="cbtn" fill="#07172e" stroke="#00e5ff" stroke-width="1.2"/>
+        <circle cx="24" cy="20" r="10" fill="#0b2447"/>
+        <text x="24" y="24" class="mono" font-size="11" fill="#00e5ff" text-anchor="middle" font-weight="bold">G</text>
+        <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">@Zine007MHIDRA</text>
+      </g>
+    </a>
 
     <!-- Portfolio Button -->
-    <g transform="translate(180, 0)">
-      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#38bdf8" stroke-width="1.2"/>
-      <circle cx="24" cy="20" r="10" fill="#0b2447"/>
-      <text x="24" y="24" class="mono" font-size="11" fill="#38bdf8" text-anchor="middle" font-weight="bold">↗</text>
-      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">Live Portfolio</text>
-    </g>
+    <a xlink:href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work" href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work" target="_blank" class="cbtn-link">
+      <g transform="translate(180, 0)">
+        <rect x="0" y="0" width="160" height="40" rx="20" class="cbtn" fill="#07172e" stroke="#38bdf8" stroke-width="1.2"/>
+        <circle cx="24" cy="20" r="10" fill="#0b2447"/>
+        <text x="24" y="24" class="mono" font-size="11" fill="#38bdf8" text-anchor="middle" font-weight="bold">↗</text>
+        <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">Selected Work</text>
+      </g>
+    </a>
 
     <!-- LinkedIn Button -->
-    <g transform="translate(360, 0)">
-      <rect x="0" y="0" width="160" height="40" rx="20" fill="#07172e" stroke="#0ea5e9" stroke-width="1.2"/>
-      <circle cx="24" cy="20" r="10" fill="#0b2447"/>
-      <text x="24" y="24" class="mono" font-size="11" fill="#0ea5e9" text-anchor="middle" font-weight="bold">in</text>
-      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">LinkedIn Profile</text>
-    </g>
+    <a xlink:href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/" href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/" target="_blank" class="cbtn-link">
+      <g transform="translate(360, 0)">
+        <rect x="0" y="0" width="160" height="40" rx="20" class="cbtn" fill="#07172e" stroke="#0ea5e9" stroke-width="1.2"/>
+        <circle cx="24" cy="20" r="10" fill="#0b2447"/>
+        <text x="24" y="24" class="mono" font-size="11" fill="#0ea5e9" text-anchor="middle" font-weight="bold">in</text>
+        <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">LinkedIn Profile</text>
+      </g>
+    </a>
 
     <!-- Email Button -->
-    <g transform="translate(540, 0)">
-      <rect x="0" y="0" width="220" height="40" rx="20" fill="#07172e" stroke="#22d3ee" stroke-width="1.2"/>
-      <circle cx="24" cy="20" r="10" fill="#0b2447"/>
-      <text x="24" y="24" class="mono" font-size="11" fill="#22d3ee" text-anchor="middle" font-weight="bold">@</text>
-      <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">zine.mhidra@gmail.com</text>
-    </g>
+    <a xlink:href="mailto:zine.mhidra@gmail.com" href="mailto:zine.mhidra@gmail.com" class="cbtn-link">
+      <g transform="translate(540, 0)">
+        <rect x="0" y="0" width="220" height="40" rx="20" class="cbtn" fill="#07172e" stroke="#22d3ee" stroke-width="1.2"/>
+        <circle cx="24" cy="20" r="10" fill="#0b2447"/>
+        <text x="24" y="24" class="mono" font-size="11" fill="#22d3ee" text-anchor="middle" font-weight="bold">@</text>
+        <text x="44" y="24" class="sans" font-size="12" font-weight="600" fill="#f8fafc">zine.mhidra@gmail.com</text>
+      </g>
+    </a>
   </g>
 </svg>

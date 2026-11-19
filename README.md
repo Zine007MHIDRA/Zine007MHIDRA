@@ -69,7 +69,7 @@
       <h3>🌐 <a href="https://github.com/Zine007MHIDRA/portfolio">portfolio</a></h3>
       <p>Developer portfolio presenting full-stack builds, physical simulations, and real-time interactive UI experiments.</p>
       <p><code>TypeScript</code> &nbsp; <code>Next.js</code> &nbsp; <code>TailwindCSS</code></p>
-      <p>🔗 <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/">Live Preview ↗</a></p>
+      <p>🔗 <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">Selected Work Live ↗</a></p>
     </td>
     <td width="50%" valign="top">
       <h3>🎧 <a href="https://github.com/Zine007MHIDRA/aether-audiophile">aether-audiophile</a></h3>
@@ -100,15 +100,29 @@
 
 *If the work is useful, open an issue, improve the documentation, share a project, or start a conversation.*
 
-<!-- CONNECT BUTTONS -->
+<!-- CONNECT TERMINAL & ACTION BUTTONS -->
 <div align="center">
+  <img src="./assets/connect.svg" width="100%" alt="Connect: GitHub, Portfolio, LinkedIn, Email" />
+  <br /><br />
   <a href="https://github.com/Zine007MHIDRA">
-    <img src="./assets/connect.svg" width="100%" alt="Connect: GitHub, Portfolio, LinkedIn, Email" />
+    <img src="https://img.shields.io/badge/GitHub-@Zine007MHIDRA-07172e?style=for-the-badge&logo=github&logoColor=00e5ff&labelColor=050811" alt="GitHub" />
+  </a>
+  &nbsp;
+  <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">
+    <img src="https://img.shields.io/badge/Portfolio-Selected%20Work-07172e?style=for-the-badge&logo=vercel&logoColor=38bdf8&labelColor=050811" alt="Portfolio" />
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-07172e?style=for-the-badge&logo=linkedin&logoColor=0ea5e9&labelColor=050811" alt="LinkedIn" />
+  </a>
+  &nbsp;
+  <a href="mailto:zine.mhidra@gmail.com">
+    <img src="https://img.shields.io/badge/Email-Get%20in%20Touch-07172e?style=for-the-badge&logo=gmail&logoColor=22d3ee&labelColor=050811" alt="Email" />
   </a>
 </div>
 
 <br />
 
 <div align="center">
-  <sub>Zine El Abidine MHIDRA &bull; <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/">portfolio</a> &bull; <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/">LinkedIn</a> &bull; <a href="mailto:zine.mhidra@gmail.com">zine.mhidra@gmail.com</a></sub>
+  <sub>Zine El Abidine MHIDRA &bull; <a href="https://portfolio-red-eight-eustdatv5d.vercel.app/#selected-work">portfolio</a> &bull; <a href="https://www.linkedin.com/in/zine-el-abidine-mhidra-bbb805374/">LinkedIn</a> &bull; <a href="mailto:zine.mhidra@gmail.com">zine.mhidra@gmail.com</a></sub>
 </div>
